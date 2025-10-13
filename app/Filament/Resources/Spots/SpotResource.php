@@ -134,7 +134,7 @@ class SpotResource extends Resource
                     ->columnSpanFull(),
                 TextEntry::make('url')
                     ->columnSpanFull()
-                    ->url(static fn (?string $state) => $state, true)
+                    ->url(static fn (?string $state): ?string => $state, true)
                     ->color(Color::Blue),
                 TextEntry::make('description')
                     ->columnSpanFull(),
@@ -169,9 +169,9 @@ class SpotResource extends Resource
                     ->badge(),
                 ImageColumn::make('images')
                     ->disk('public')
-                    ->circular(),
+                    ->imageSize(100),
                 TextColumn::make('url')
-                    ->url(static fn (?string $state) => $state, true)
+                    ->url(static fn (?string $state): ?string => $state, true)
                     ->color(Color::Blue)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('description')
