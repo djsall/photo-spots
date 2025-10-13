@@ -11,13 +11,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        if (! app()->isProduction()) {
-            User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                'role' => Role::Admin,
-            ]);
-        }
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'role' => Role::Admin,
+        ]);
 
         $this->call([
             SpottagSeeder::class,

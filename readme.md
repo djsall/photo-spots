@@ -18,3 +18,5 @@
 - `php artisan key:generate`
 - `php artisan storage:link`
 - `php artisan db:seed`
+  - this command will add the default tags
+  - this command will also create an administrative user, with the credentials `test@example.com` and `password`. Please change this after the fact.
