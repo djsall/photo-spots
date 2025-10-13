@@ -17,3 +17,4 @@
   - change the `APP_URL` to the actual root url
 - `php artisan key:generate`
 - `php artisan storage:link`
+- `php artisan db:seed`
