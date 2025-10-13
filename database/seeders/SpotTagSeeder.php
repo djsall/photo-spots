@@ -9,22 +9,16 @@ class SpotTagSeeder extends Seeder
 {
     public function run(): void
     {
-        SpotTag::factory()
-            ->state([
-                'name' => 'Drón',
-            ])
-            ->create();
+        $defaults = [
+            'Drón',
+            'Tejút',
+            'Karika',
+        ];
 
-        SpotTag::factory()
-            ->state([
-                'name' => 'Tejút',
-            ])
-            ->create();
-
-        SpotTag::factory()
-            ->state([
-                'name' => 'Karika',
-            ])
-            ->create();
+        foreach ($defaults as $name) {
+            SpotTag::create([
+                'name' => $name,
+            ]);
+        }
     }
 }
