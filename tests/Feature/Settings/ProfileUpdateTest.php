@@ -4,6 +4,8 @@ use App\Livewire\Settings\Profile;
 use App\Models\User;
 use Livewire\Livewire;
 
+use function Pest\Laravel\assertSoftDeleted;
+
 test('profile page is displayed', function () {
     $this->actingAs($user = User::factory()->create());
 
@@ -57,7 +59,7 @@ test('user can delete their account', function () {
         ->assertHasNoErrors()
         ->assertRedirect('/');
 
-    expect($user->fresh())->toBeNull();
+    assertSoftDeleted($user);
     expect(auth()->check())->toBeFalse();
 });
 
