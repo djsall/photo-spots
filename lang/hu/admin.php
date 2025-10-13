@@ -9,8 +9,15 @@ return [
     'labels' => [
         'user' => 'felhasználó',
         'users' => 'felhasználók',
+        'spot' => 'hely',
+        'spots' => 'helyek',
+        'spot-tag' => 'címke',
+        'spot-tags' => 'címkék',
+        'spot-category' => 'kategória',
+        'spot-categories' => 'kategóriák',
     ],
     'navigation' => [
         'system' => 'rendszer',
+        'spots' => 'helyek',
     ],
 ];

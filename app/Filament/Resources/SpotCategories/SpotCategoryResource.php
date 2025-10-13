@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Users;
+namespace App\Filament\Resources\SpotCategories;
 
-use App\Enums\User\Role;
-use App\Filament\Resources\Users\Pages\ManageUsers;
-use App\Models\User;
+use App\Filament\Resources\SpotCategories\Pages\ManageSpotCategories;
+use App\Models\SpotCategory;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -15,11 +14,12 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -28,67 +28,57 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use UnitEnum;
 
-class UserResource extends Resource
+class SpotCategoryResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = SpotCategory::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?int $navigationSort = 2;
+
     public static function getModelLabel(): string
     {
-        return __('admin.labels.user');
+        return __('admin.labels.spot-category');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.labels.users');
+        return __('admin.labels.spot-categories');
     }
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return mb_ucfirst(__('admin.navigation.system'));
-    }
-
-    public static function getNavigationBadge(): ?string
-    {
-        return User::count();
+        return mb_ucfirst(__('admin.navigation.spots'));
     }
 
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
-                Select::make('role')
-                    ->options(Role::class)
-                    ->default(Role::Viewer)
-                    ->required(),
                 TextInput::make('name')
                     ->required(),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email()
-                    ->required(),
+                Textarea::make('description'),
             ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema
-            ->columns(4)
+            ->columns()
             ->components([
-                TextEntry::make('role')
-                    ->badge(),
                 TextEntry::make('name'),
-                TextEntry::make('email')
-                    ->label('Email address'),
-                TextEntry::make('email_verified_at')
-                    ->dateTime(),
+                TextEntry::make('description')
+                    ->columnSpanFull(),
                 TextEntry::make('created_at')
                     ->dateTime(),
                 TextEntry::make('updated_at')
                     ->dateTime(),
+                TextEntry::make('deleted_at')
+                    ->dateTime()
+                    ->visible(fn (SpotCategory $record): bool => $record->trashed()),
             ]);
     }
 
@@ -97,17 +87,9 @@ class UserResource extends Resource
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('role')
-                    ->badge()
-                    ->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                TextColumn::make('description'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -116,16 +98,19 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('two_factor_confirmed_at')
+                TextColumn::make('deleted_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()
+                    ->modalWidth(Width::Medium),
+                EditAction::make()
+                    ->modalWidth(Width::Medium),
                 DeleteAction::make(),
                 ForceDeleteAction::make(),
                 RestoreAction::make(),
@@ -142,7 +127,7 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageUsers::route('/'),
+            'index' => ManageSpotCategories::route('/'),
         ];
     }
 

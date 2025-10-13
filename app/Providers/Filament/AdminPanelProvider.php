@@ -7,11 +7,14 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Infolists\Components\Entry;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Support\Enums\Width;
+use Filament\Tables\Columns\Column;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -60,9 +63,18 @@ class AdminPanelProvider extends PanelProvider
                     $component->translateLabel();
                 });
 
-                TextColumn::configureUsing(function (TextColumn $component) {
+                Column::configureUsing(function (Column $component) {
                     $component->translateLabel();
                 });
-            });
+
+                Entry::configureUsing(function (Entry $component) {
+                    $component->translateLabel();
+                });
+
+                TextEntry::configureUsing(function (TextEntry $component) {
+                    $component->placeholder('-');
+                });
+            })
+            ->maxContentWidth(Width::Full);
     }
 }

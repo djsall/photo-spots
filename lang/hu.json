@@ -3,5 +3,16 @@
     "Name" : "Név",
     "Email address": "Email cím",
     "Email verified at": "Email cím megerősítve",
-    "Two factor confirmed at": "Kétfaktoros hitelesítés"
+    "Two factor confirmed at": "Kétfaktoros hitelesítés",
+    "Description" : "Leírás",
+    "Distance": "Távolság",
+    "Access" : "Megközelítés",
+    "Difficulty": "Nehézség",
+    "Tags": "Címkék",
+    "Categories": "Kategóriák",
+    "Images": "Képek",
+    "Created at" : "Létrehozva",
+    "Updated at": "Módosítva",
+    "Deleted at": "Törölve",
+    "Url": "Hivatkozás"
 }
