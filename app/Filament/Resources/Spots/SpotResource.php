@@ -9,6 +9,7 @@ use App\Models\SpotCategory;
 use App\Models\SpotTag;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -213,22 +214,27 @@ class SpotResource extends Resource
                     }),
                 SelectFilter::make('tag_ids')
                     ->label('Tags')
-                    ->options(SpotTag::pluck('name', 'id'))
+                    ->relationship('tags', 'name')
                     ->multiple()
                     ->preload(),
                 SelectFilter::make('category_ids')
                     ->label('Categories')
-                    ->options(SpotCategory::pluck('name', 'id'))
+                    ->relationship('categories', 'name')
                     ->multiple()
                     ->preload(),
                 TrashedFilter::make(),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
-                ForceDeleteAction::make(),
-                RestoreAction::make(),
+                ViewAction::make()
+                    ->iconButton(),
+                EditAction::make()
+                    ->iconButton(),
+                ActionGroup::make([
+                    DeleteAction::make(),
+                    ForceDeleteAction::make(),
+                    RestoreAction::make(),
+                ])
+                    ->color(Color::Red),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

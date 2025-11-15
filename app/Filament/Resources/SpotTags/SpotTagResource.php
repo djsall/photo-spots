@@ -5,6 +5,7 @@ namespace App\Filament\Resources\SpotTags;
 use App\Filament\Resources\SpotTags\Pages\ManageSpotTags;
 use App\Models\SpotTag;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -13,12 +14,11 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -64,24 +64,6 @@ class SpotTagResource extends Resource
             ]);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return $schema
-            ->columns()
-            ->components([
-                TextEntry::make('name'),
-                TextEntry::make('description')
-                    ->columnSpanFull(),
-                TextEntry::make('created_at')
-                    ->dateTime(),
-                TextEntry::make('updated_at')
-                    ->dateTime(),
-                TextEntry::make('deleted_at')
-                    ->dateTime()
-                    ->visible(fn (SpotTag $record): bool => $record->trashed()),
-            ]);
-    }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -107,13 +89,15 @@ class SpotTagResource extends Resource
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                ViewAction::make()
-                    ->modalWidth(Width::Medium),
                 EditAction::make()
-                    ->modalWidth(Width::Medium),
-                DeleteAction::make(),
-                ForceDeleteAction::make(),
-                RestoreAction::make(),
+                    ->modalWidth(Width::ExtraLarge)
+                    ->iconButton(),
+                ActionGroup::make([
+                    DeleteAction::make(),
+                    ForceDeleteAction::make(),
+                    RestoreAction::make(),
+                ])
+                    ->color(Color::Red),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

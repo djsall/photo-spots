@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
@@ -13,4 +14,9 @@ class SpotTag extends Model
     protected $fillable = [
         'name', 'description',
     ];
+
+    public function spots(): HasMany
+    {
+        return $this->hasMany(Spot::class);
+    }
 }
