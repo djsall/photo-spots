@@ -39,6 +39,9 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mokhosh\FilamentRating\Columns\RatingColumn;
+use Mokhosh\FilamentRating\Components\Rating;
+use Mokhosh\FilamentRating\Entries\RatingEntry;
 use UnitEnum;
 
 class SpotResource extends Resource
@@ -106,6 +109,8 @@ class SpotResource extends Resource
                     ->downloadable()
                     ->disk('public')
                     ->image(),
+                Rating::make('rating')
+                    ->label('Értékelés'),
                 Textarea::make('description')
                     ->columnSpanFull(),
                 Textarea::make('access')
@@ -134,9 +139,10 @@ class SpotResource extends Resource
                     ->disk('public')
                     ->columnSpanFull(),
                 TextEntry::make('url')
-                    ->columnSpanFull()
                     ->url(static fn (?string $state): ?string => $state, true)
                     ->color(Color::Blue),
+                RatingEntry::make('rating')
+                    ->label('Értékelés'),
                 TextEntry::make('description')
                     ->columnSpanFull(),
                 TextEntry::make('access')
@@ -171,6 +177,9 @@ class SpotResource extends Resource
                 ImageColumn::make('images')
                     ->disk('public')
                     ->imageSize(100),
+                RatingColumn::make('rating')
+                    ->label('Értékelés')
+                    ->sortable(),
                 TextColumn::make('url')
                     ->url(static fn (?string $state): ?string => $state, true)
                     ->color(Color::Blue)
@@ -222,6 +231,24 @@ class SpotResource extends Resource
                     ->relationship('categories', 'name')
                     ->multiple()
                     ->preload(),
+                Filter::make('rating')
+                    ->schema([
+                        TextInput::make('rating')
+                            ->label('Min. értékelés')
+                            ->numeric()
+                            ->suffixIcon(Heroicon::Star),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        $rating = $data['rating'];
+
+                        return $query
+                            ->when(
+                                filled($rating),
+                                function (Builder $query) use ($rating) {
+                                    return $query->where('rating', '>=', $rating);
+                                });
+
+                    }),
                 TrashedFilter::make(),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([

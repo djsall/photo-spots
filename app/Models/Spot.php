@@ -12,7 +12,8 @@ class Spot extends Model
     use HasJsonRelationships, SoftDeletes;
 
     protected $fillable = [
-        'name', 'tag_ids', 'category_ids', 'distance', 'images', 'url', 'access', 'difficulty', 'description',
+        'name', 'tag_ids', 'category_ids', 'distance', 'images', 'url', 'access', 'difficulty', 'description', 'rating',
+        'order',
     ];
 
     protected function casts(): array

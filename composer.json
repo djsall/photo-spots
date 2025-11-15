@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
+        "mokhosh/filament-rating": "^2.0",
         "staudenmeir/eloquent-json-relations": "^1.1"
     },
     "require-dev": {
