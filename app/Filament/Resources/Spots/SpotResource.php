@@ -4,9 +4,8 @@ namespace App\Filament\Resources\Spots;
 
 use App\Filament\Resources\SpotCategories\SpotCategoryResource;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
+use App\Filament\Resources\SpotTags\SpotTagResource;
 use App\Models\Spot;
-use App\Models\SpotCategory;
-use App\Models\SpotTag;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -85,12 +84,18 @@ class SpotResource extends Resource
                     ->suffix(' km'),
                 Select::make('tag_ids')
                     ->label('Tags')
-                    ->options(SpotTag::pluck('name', 'id'))
+                    ->relationship('tags', 'name')
+                    ->createOptionForm(function (Schema $schema) {
+                        return SpotTagResource::form($schema);
+                    })
+                    ->createOptionAction(function (Action $action) {
+                        return $action->modalWidth(Width::Medium);
+                    })
                     ->multiple()
                     ->preload(),
                 Select::make('category_ids')
                     ->label('Categories')
-                    ->options(SpotCategory::pluck('name', 'id'))
+                    ->relationship('categories', 'name')
                     ->multiple()
                     ->preload()
                     ->createOptionForm(function (Schema $schema) {
@@ -98,9 +103,6 @@ class SpotResource extends Resource
                     })
                     ->createOptionAction(function (Action $action) {
                         return $action->modalWidth(Width::Medium);
-                    })
-                    ->createOptionUsing(function (array $data) {
-                        return SpotCategory::create($data)->id;
                     }),
                 FileUpload::make('images')
                     ->columnSpanFull()
