@@ -187,6 +187,13 @@ class SpotResource extends Resource
                     ->color(Color::Blue)
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('description')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('access')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('difficulty')
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('access')
                     ->toggleable(isToggledHiddenByDefault: true),
