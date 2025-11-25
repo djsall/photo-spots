@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources\Spots;
 
+use App\Filament\Resources\EnvironmentalFactors\EnvironmentalFactorResource;
 use App\Filament\Resources\SpotCategories\SpotCategoryResource;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
 use App\Filament\Resources\SpotTags\SpotTagResource;
+use App\Models\EnvironmentalFactor;
 use App\Models\Spot;
+use App\Models\SpotCategory;
+use App\Models\SpotTag;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -51,7 +55,7 @@ class SpotResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -86,7 +90,7 @@ class SpotResource extends Resource
                     ->suffix(' km'),
                 Select::make('tag_ids')
                     ->label('Tags')
-                    ->relationship('tags', 'name')
+                    ->options(static fn () => SpotTag::pluck('name', 'id'))
                     ->createOptionForm(function (Schema $schema) {
                         return SpotTagResource::form($schema);
                     })
@@ -97,11 +101,22 @@ class SpotResource extends Resource
                     ->preload(),
                 Select::make('category_ids')
                     ->label('Categories')
-                    ->relationship('categories', 'name')
+                    ->options(static fn () => SpotCategory::pluck('name', 'id'))
                     ->multiple()
                     ->preload()
                     ->createOptionForm(function (Schema $schema) {
                         return SpotCategoryResource::form($schema);
+                    })
+                    ->createOptionAction(function (Action $action) {
+                        return $action->modalWidth(Width::Medium);
+                    }),
+                Select::make('environmental_factor_ids')
+                    ->label('Environmental factors')
+                    ->options(static fn () => EnvironmentalFactor::pluck('name', 'id'))
+                    ->multiple()
+                    ->preload()
+                    ->createOptionForm(function (Schema $schema) {
+                        return EnvironmentalFactorResource::form($schema);
                     })
                     ->createOptionAction(function (Action $action) {
                         return $action->modalWidth(Width::Medium);
@@ -145,6 +160,11 @@ class SpotResource extends Resource
                 TextEntry::make('categories.name')
                     ->label('Categories')
                     ->badge(),
+                TextEntry::make('environmental_factors.name')
+                    ->label('Environmental factors')
+                    ->badge(),
+                RatingEntry::make('rating')
+                    ->label('Értékelés'),
                 ImageEntry::make('images')
                     ->disk('public')
                     ->columnSpanFull(),
@@ -155,8 +175,6 @@ class SpotResource extends Resource
                             ->color(Color::Blue)
                             ->limit(48),
                     ]),
-                RatingEntry::make('rating')
-                    ->label('Értékelés'),
                 TextEntry::make('description')
                     ->columnSpanFull(),
                 TextEntry::make('access')
@@ -187,6 +205,8 @@ class SpotResource extends Resource
                 TextColumn::make('tags.name')
                     ->badge(),
                 TextColumn::make('categories.name')
+                    ->badge(),
+                TextColumn::make('environmentalFactors.name')
                     ->badge(),
                 ImageColumn::make('images')
                     ->disk('public')
@@ -242,6 +262,11 @@ class SpotResource extends Resource
                 SelectFilter::make('category_ids')
                     ->label('Categories')
                     ->relationship('categories', 'name')
+                    ->multiple()
+                    ->preload(),
+                SelectFilter::make('environmental_factor_ids')
+                    ->label('Environmental factors')
+                    ->relationship('environmentalFactors', 'name')
                     ->multiple()
                     ->preload(),
                 Filter::make('rating')

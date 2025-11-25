@@ -15,6 +15,8 @@ return [
         'spot-tags' => 'technikai címkék',
         'spot-category' => 'hely kategória',
         'spot-categories' => 'hely kategóriák',
+        'environmental-factor' => 'körülmény kategória',
+        'environmental-factors' => 'körülmény kategóriák',
     ],
     'navigation' => [
         'system' => 'rendszer',
