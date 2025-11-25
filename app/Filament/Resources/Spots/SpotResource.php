@@ -140,6 +140,7 @@ class SpotResource extends Resource
                     ->numeric()
                     ->suffix(' km'),
                 TextEntry::make('tags.name')
+                    ->label('Tags')
                     ->badge(),
                 TextEntry::make('categories.name')
                     ->label('Categories')
