@@ -151,8 +151,9 @@ class SpotResource extends Resource
                 RepeatableEntry::make('urls')
                     ->schema([
                         TextEntry::make('url')
-                            ->url(static fn (?string $state): ?string => $state, true)
-                            ->color(Color::Blue),
+                            ->url(static fn(?string $state): ?string => $state, true)
+                            ->color(Color::Blue)
+                            ->limit(48),
                     ]),
                 RatingEntry::make('rating')
                     ->label('Értékelés'),
@@ -168,7 +169,7 @@ class SpotResource extends Resource
                     ->dateTime(),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Spot $record): bool => $record->trashed()),
+                    ->visible(fn(Spot $record): bool => $record->trashed()),
             ]);
     }
 
