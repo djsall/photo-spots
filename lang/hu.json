@@ -8,11 +8,12 @@
     "Distance": "Távolság",
     "Access" : "Megközelítés",
     "Difficulty": "Nehézség",
-    "Tags": "Címkék",
-    "Categories": "Kategóriák",
+    "Tags": "Technikai címkék",
+    "Categories": "Hely kategóriák",
     "Images": "Képek",
     "Created at" : "Létrehozva",
     "Updated at": "Módosítva",
     "Deleted at": "Törölve",
-    "Url": "Hivatkozás"
+    "Url": "Hivatkozás",
+    "Urls": "Hivatkozások"
 }

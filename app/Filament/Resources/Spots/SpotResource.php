@@ -19,10 +19,12 @@ use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -119,8 +121,13 @@ class SpotResource extends Resource
                     ->columnSpanFull(),
                 Textarea::make('difficulty')
                     ->columnSpanFull(),
-                Textarea::make('url')
-                    ->columnSpanFull(),
+                Repeater::make('urls')
+                    ->columnSpanFull()
+                    ->minItems(1)
+                    ->addActionLabel(__('admin.spots.add-url'))
+                    ->schema([
+                        Textarea::make('url'),
+                    ]),
             ]);
     }
 
@@ -140,9 +147,12 @@ class SpotResource extends Resource
                 ImageEntry::make('images')
                     ->disk('public')
                     ->columnSpanFull(),
-                TextEntry::make('url')
-                    ->url(static fn (?string $state): ?string => $state, true)
-                    ->color(Color::Blue),
+                RepeatableEntry::make('urls')
+                    ->schema([
+                        TextEntry::make('url')
+                            ->url(static fn (?string $state): ?string => $state, true)
+                            ->color(Color::Blue),
+                    ]),
                 RatingEntry::make('rating')
                     ->label('Értékelés'),
                 TextEntry::make('description')
@@ -182,10 +192,6 @@ class SpotResource extends Resource
                 RatingColumn::make('rating')
                     ->label('Értékelés')
                     ->sortable(),
-                TextColumn::make('url')
-                    ->url(static fn (?string $state): ?string => $state, true)
-                    ->color(Color::Blue)
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('description')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -20,4 +20,7 @@ return [
         'system' => 'rendszer',
         'spots' => 'helyek',
     ],
+    'spots' => [
+        'add-url' => 'Új hivatkozás',
+    ],
 ];

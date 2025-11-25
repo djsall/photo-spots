@@ -12,7 +12,7 @@ class Spot extends Model
     use HasJsonRelationships, SoftDeletes;
 
     protected $fillable = [
-        'name', 'tag_ids', 'category_ids', 'distance', 'images', 'url', 'access', 'difficulty', 'description', 'rating',
+        'name', 'tag_ids', 'category_ids', 'distance', 'images', 'urls', 'access', 'difficulty', 'description', 'rating',
         'order',
     ];
 
@@ -23,6 +23,7 @@ class Spot extends Model
             'tag_ids' => 'array',
             'category_ids' => 'array',
             'images' => 'array',
+            'urls' => 'json',
         ];
     }
 
