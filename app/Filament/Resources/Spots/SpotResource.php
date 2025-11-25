@@ -151,7 +151,7 @@ class SpotResource extends Resource
                 RepeatableEntry::make('urls')
                     ->schema([
                         TextEntry::make('url')
-                            ->url(static fn(?string $state): ?string => $state, true)
+                            ->url(static fn (?string $state): ?string => $state, true)
                             ->color(Color::Blue)
                             ->limit(48),
                     ]),
@@ -169,7 +169,7 @@ class SpotResource extends Resource
                     ->dateTime(),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn(Spot $record): bool => $record->trashed()),
+                    ->visible(fn (Spot $record): bool => $record->trashed()),
             ]);
     }
 
@@ -202,10 +202,6 @@ class SpotResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('difficulty')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('access')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('difficulty')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
