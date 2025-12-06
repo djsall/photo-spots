@@ -19,6 +19,8 @@ class ManageSpots extends ManageRecords
         return [
             CreateAction::make(),
             ImportAction::make('import-spots')
+                ->label('Import spots')
+                ->translateLabel()
                 ->importer(SpotImporter::class)
                 ->visible(static fn () => Filament::auth()->user()->role === Role::Admin),
         ];
