@@ -77,6 +77,7 @@ class AdminPanelProvider extends PanelProvider
                     $component->placeholder('-');
                 });
             })
+            ->databaseNotifications()
             ->maxContentWidth(Width::Full);
     }
 }
