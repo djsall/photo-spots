@@ -140,9 +140,9 @@ class SpotResource extends Resource
                     ->columnSpanFull()
                     ->minItems(1)
                     ->addActionLabel(__('admin.spots.add-url'))
-                    ->schema([
+                    ->simple(
                         Textarea::make('url'),
-                    ]),
+                    ),
             ]);
     }
 

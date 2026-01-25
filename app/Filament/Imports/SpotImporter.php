@@ -17,18 +17,28 @@ class SpotImporter extends Importer
         return [
             ImportColumn::make('name')
                 ->requiredMapping()
-                ->rules(['required']),
+                ->rules(['required'])
+                ->example('Hegyi berkenyés'),
             ImportColumn::make('distance')
                 ->numeric()
-                ->rules(['integer']),
-            ImportColumn::make('access'),
-            ImportColumn::make('difficulty'),
-            ImportColumn::make('description'),
+                ->rules(['integer'])
+                ->example(25),
+            ImportColumn::make('access')
+                ->example('Autóval, majd minimál séta'),
+            ImportColumn::make('difficulty')
+                ->example('Nedves időben dagonya'),
+            ImportColumn::make('description')
+                ->example('Szép, ferde fa'),
             ImportColumn::make('rating')
                 ->numeric()
-                ->rules(['integer']),
+                ->rules(['integer'])
+                ->example(3),
             ImportColumn::make('urls')
-                ->multiple(';'),
+                ->multiple()
+                ->example('https://www.google.com/,https://www.youtube.com/'),
+            ImportColumn::make('images')
+                ->multiple()
+                ->example('hely_1.jpg,hely-2.jpg,hely3.jpg'),
         ];
     }
 

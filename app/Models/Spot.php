@@ -23,7 +23,7 @@ class Spot extends Model
             'tag_ids' => 'array',
             'category_ids' => 'array',
             'environmental_factor_ids' => 'array',
-            'images' => 'array',
+            'images' => 'json',
             'urls' => 'json',
         ];
     }
