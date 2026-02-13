@@ -4,4 +4,4 @@ namespace App\Policies;
 
 use App\Policies\Defaults\BaseContentManager;
 
-class SpotTagPolicy extends BaseContentManager {}
+class EnvironmentalFactorPolicy extends BaseContentManager {}
