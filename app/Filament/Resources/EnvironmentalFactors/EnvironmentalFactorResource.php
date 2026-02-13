@@ -36,7 +36,7 @@ class EnvironmentalFactorResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function getModelLabel(): string
     {
@@ -50,7 +50,7 @@ class EnvironmentalFactorResource extends Resource
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return mb_ucfirst(__('admin.navigation.spots'));
+        return mb_ucfirst(__('admin.navigation.tags'));
     }
 
     public static function form(Schema $schema): Schema

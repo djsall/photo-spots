@@ -36,7 +36,7 @@ class SpotTagResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function getModelLabel(): string
     {
@@ -50,7 +50,7 @@ class SpotTagResource extends Resource
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return mb_ucfirst(__('admin.navigation.spots'));
+        return mb_ucfirst(__('admin.navigation.tags'));
     }
 
     public static function form(Schema $schema): Schema
