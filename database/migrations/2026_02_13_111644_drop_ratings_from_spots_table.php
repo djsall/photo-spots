@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('spots', function (Blueprint $table) {
-            $table->dropColumn('ratings');
+            $table->dropColumn('rating');
         });
     }
 };
