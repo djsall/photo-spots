@@ -29,15 +29,11 @@ class SpotImporter extends Importer
                 ->example('Nedves időben dagonya'),
             ImportColumn::make('description')
                 ->example('Szép, ferde fa'),
-            ImportColumn::make('rating')
-                ->numeric()
-                ->rules(['integer'])
-                ->example(3),
             ImportColumn::make('urls')
                 ->multiple()
                 ->example('https://www.google.com/,https://www.youtube.com/'),
             ImportColumn::make('images')
-                ->multiple(';')
+                ->multiple()
                 ->example('hely_1.jpg,hely-2.jpg,hely3.jpg'),
         ];
     }
