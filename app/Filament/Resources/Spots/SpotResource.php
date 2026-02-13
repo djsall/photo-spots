@@ -188,8 +188,10 @@ class SpotResource extends Resource
     {
         return $table
             ->recordTitleAttribute('name')
+            ->defaultSort('name', 'asc')
             ->columns([
                 TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('distance')
                     ->numeric()
