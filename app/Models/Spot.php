@@ -13,7 +13,7 @@ class Spot extends Model
 
     protected $fillable = [
         'name', 'tag_ids', 'category_ids', 'environmental_factor_ids', 'distance', 'images', 'urls', 'access',
-        'difficulty', 'description', 'rating', 'order',
+        'difficulty', 'description', 'order',
     ];
 
     protected function casts(): array
