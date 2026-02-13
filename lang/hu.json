@@ -8,14 +8,14 @@
     "Distance": "Távolság",
     "Access" : "Megközelítés",
     "Difficulty": "Nehézség",
-    "Tags": "Technikai címkék",
-    "Categories": "Hely kategóriák",
+    "Tags": "Technikák",
+    "Categories": "Kategóriák",
     "Images": "Képek",
     "Created at" : "Létrehozva",
     "Updated at": "Módosítva",
     "Deleted at": "Törölve",
     "Url": "Hivatkozás",
     "Urls": "Hivatkozások",
-    "Environmental factors": "Körülmény kategóriák",
+    "Environmental factors": "Körülmények",
     "Import spots": "Helyek importálása"
 }
