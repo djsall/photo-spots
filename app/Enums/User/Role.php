@@ -14,7 +14,7 @@ enum Role: string implements HasColor, HasLabel
 
     case Admin = 'admin';
 
-    public function getLabel(): string|Htmlable|null
+    public function getLabel(): string
     {
         return match ($this) {
             self::Viewer => __('admin.roles.viewer'),
@@ -23,7 +23,7 @@ enum Role: string implements HasColor, HasLabel
         };
     }
 
-    public function getColor(): string|array|null
+    public function getColor(): array
     {
         return match ($this) {
             self::Viewer => Color::Cyan,
