@@ -37,7 +37,7 @@ class SpotImporter extends Importer
                 ->multiple()
                 ->example('https://www.google.com/,https://www.youtube.com/'),
             ImportColumn::make('images')
-                ->multiple()
+                ->multiple(';')
                 ->example('hely_1.jpg,hely-2.jpg,hely3.jpg'),
         ];
     }
