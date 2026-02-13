@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\SpotTag;
+use App\Models\Technique;
 use Illuminate\Database\Seeder;
 
 class SpotTagSeeder extends Seeder
@@ -16,7 +16,7 @@ class SpotTagSeeder extends Seeder
         ];
 
         foreach ($defaults as $name) {
-            SpotTag::create([
+            Technique::create([
                 'name' => $name,
             ]);
         }

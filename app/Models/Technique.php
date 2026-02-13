@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
-class SpotTag extends Model
+class Technique extends Model
 {
     use HasJsonRelationships, SoftDeletes;
 

@@ -30,12 +30,12 @@ class Spot extends Model
 
     public function tags(): BelongsToJson
     {
-        return $this->belongsToJson(SpotTag::class, 'tag_ids');
+        return $this->belongsToJson(Technique::class, 'tag_ids');
     }
 
     public function categories(): BelongsToJson
     {
-        return $this->belongsToJson(SpotCategory::class, 'category_ids');
+        return $this->belongsToJson(Category::class, 'category_ids');
     }
 
     public function environmentalFactors(): BelongsToJson

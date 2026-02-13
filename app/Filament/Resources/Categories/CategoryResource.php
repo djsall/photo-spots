@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\SpotTags;
+namespace App\Filament\Resources\Categories;
 
-use App\Filament\Resources\SpotTags\Pages\ManageSpotTags;
-use App\Models\SpotTag;
+use App\Filament\Resources\Categories\Pages\ManageCategories;
+use App\Models\Category;
 use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -28,24 +28,24 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use UnitEnum;
 
-class SpotTagResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = SpotTag::class;
+    protected static ?string $model = Category::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
     public static function getModelLabel(): string
     {
-        return __('admin.labels.spot-tag');
+        return __('admin.labels.spot-category');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.labels.spot-tags');
+        return __('admin.labels.spot-categories');
     }
 
     public static function getNavigationGroup(): string|UnitEnum|null
@@ -93,6 +93,7 @@ class SpotTagResource extends Resource
                     ->modalWidth(Width::ExtraLarge)
                     ->iconButton(),
                 ActionGroup::make([
+
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make(),
@@ -111,7 +112,7 @@ class SpotTagResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageSpotTags::route('/'),
+            'index' => ManageCategories::route('/'),
         ];
     }
 

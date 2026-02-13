@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Users\Pages;
+namespace App\Filament\Resources\Categories\Pages;
 
-use App\Filament\Resources\Users\UserResource;
+use App\Filament\Resources\Categories\CategoryResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;
 use Filament\Support\Enums\Width;
 
-class ManageUsers extends ManageRecords
+class ManageCategories extends ManageRecords
 {
-    protected static string $resource = UserResource::class;
+    protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array
     {

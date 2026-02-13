@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\SpotCategories;
+namespace App\Filament\Resources\Techniques;
 
-use App\Filament\Resources\SpotCategories\Pages\ManageSpotCategories;
-use App\Models\SpotCategory;
+use App\Filament\Resources\Techniques\Pages\ManageTechniques;
+use App\Models\Technique;
 use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -28,24 +28,24 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use UnitEnum;
 
-class SpotCategoryResource extends Resource
+class TechniqueResource extends Resource
 {
-    protected static ?string $model = SpotCategory::class;
+    protected static ?string $model = Technique::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     public static function getModelLabel(): string
     {
-        return __('admin.labels.spot-category');
+        return __('admin.labels.spot-tag');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.labels.spot-categories');
+        return __('admin.labels.spot-tags');
     }
 
     public static function getNavigationGroup(): string|UnitEnum|null
@@ -93,7 +93,6 @@ class SpotCategoryResource extends Resource
                     ->modalWidth(Width::ExtraLarge)
                     ->iconButton(),
                 ActionGroup::make([
-
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make(),
@@ -112,7 +111,7 @@ class SpotCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageSpotCategories::route('/'),
+            'index' => ManageTechniques::route('/'),
         ];
     }
 

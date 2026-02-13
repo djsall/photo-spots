@@ -62,6 +62,7 @@ class UserResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Select::make('role')
                     ->options(Role::class)
@@ -79,7 +80,7 @@ class UserResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema
-            ->columns(4)
+            ->columns(3)
             ->components([
                 TextEntry::make('role')
                     ->badge(),
@@ -103,14 +104,19 @@ class UserResource extends Resource
                 TextColumn::make('role')
                     ->badge()
                     ->searchable(),
-                TextColumn::make('name')
-                    ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')
                     ->searchable(),
+                TextColumn::make('name')
+                    ->searchable(),
                 TextColumn::make('email_verified_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('two_factor_confirmed_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -119,9 +125,6 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('two_factor_confirmed_at')
-                    ->dateTime()
-                    ->sortable(),
             ])
             ->filters([
                 TrashedFilter::make(),

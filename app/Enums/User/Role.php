@@ -5,7 +5,6 @@ namespace App\Enums\User;
 use Filament\Support\Colors\Color;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
-use Illuminate\Contracts\Support\Htmlable;
 
 enum Role: string implements HasColor, HasLabel
 {

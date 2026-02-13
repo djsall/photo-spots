@@ -2,14 +2,14 @@
 
 namespace App\Filament\Resources\Spots;
 
+use App\Filament\Resources\Categories\CategoryResource;
 use App\Filament\Resources\EnvironmentalFactors\EnvironmentalFactorResource;
-use App\Filament\Resources\SpotCategories\SpotCategoryResource;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
-use App\Filament\Resources\SpotTags\SpotTagResource;
+use App\Filament\Resources\Techniques\TechniqueResource;
+use App\Models\Category;
 use App\Models\EnvironmentalFactor;
 use App\Models\Spot;
-use App\Models\SpotCategory;
-use App\Models\SpotTag;
+use App\Models\Technique;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -87,9 +87,9 @@ class SpotResource extends Resource
                     ->suffix(' km'),
                 Select::make('tag_ids')
                     ->label('Tags')
-                    ->options(static fn () => SpotTag::pluck('name', 'id'))
+                    ->options(static fn () => Technique::pluck('name', 'id'))
                     ->createOptionForm(function (Schema $schema) {
-                        return SpotTagResource::form($schema);
+                        return TechniqueResource::form($schema);
                     })
                     ->createOptionAction(function (Action $action) {
                         return $action->modalWidth(Width::Medium);
@@ -98,11 +98,11 @@ class SpotResource extends Resource
                     ->preload(),
                 Select::make('category_ids')
                     ->label('Categories')
-                    ->options(static fn () => SpotCategory::pluck('name', 'id'))
+                    ->options(static fn () => Category::pluck('name', 'id'))
                     ->multiple()
                     ->preload()
                     ->createOptionForm(function (Schema $schema) {
-                        return SpotCategoryResource::form($schema);
+                        return CategoryResource::form($schema);
                     })
                     ->createOptionAction(function (Action $action) {
                         return $action->modalWidth(Width::Medium);
