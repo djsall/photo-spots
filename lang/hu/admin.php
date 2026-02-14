@@ -3,6 +3,7 @@
 return [
     'roles' => [
         'viewer' => 'Olvasó',
+        'user' => 'Felhasználó',
         'content-manager' => 'Tartalomkezelő',
         'admin' => 'Adminisztrátor',
     ],

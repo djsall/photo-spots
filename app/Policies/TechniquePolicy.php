@@ -4,4 +4,4 @@ namespace App\Policies;
 
 use App\Policies\Defaults\BasePolicy;
 
-class EnvironmentalFactorPolicy extends BasePolicy {}
+class TechniquePolicy extends BasePolicy {}

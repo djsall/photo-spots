@@ -6,7 +6,7 @@ use App\Enums\User\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class BaseContentManager
+class BasePolicy
 {
     public function viewAny(User $user): bool
     {

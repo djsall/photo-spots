@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
@@ -12,7 +13,7 @@ class Spot extends Model
     use HasJsonRelationships, SoftDeletes;
 
     protected $fillable = [
-        'name', 'tag_ids', 'category_ids', 'environmental_factor_ids', 'distance', 'images', 'urls', 'access',
+        'name', 'tag_ids', 'category_ids', 'environmental_factor_ids', 'user_id', 'distance', 'images', 'urls', 'access',
         'difficulty', 'description', 'order',
     ];
 
@@ -41,5 +42,10 @@ class Spot extends Model
     public function environmentalFactors(): BelongsToJson
     {
         return $this->belongsToJson(EnvironmentalFactor::class, 'environmental_factor_ids');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

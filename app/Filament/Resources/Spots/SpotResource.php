@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources\Spots;
 
-use App\Filament\Resources\Categories\CategoryResource;
-use App\Filament\Resources\EnvironmentalFactors\EnvironmentalFactorResource;
+use App\Enums\User\Role;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
-use App\Filament\Resources\Techniques\TechniqueResource;
 use App\Models\Category;
 use App\Models\EnvironmentalFactor;
 use App\Models\Spot;
 use App\Models\Technique;
 use BackedEnum;
-use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -22,7 +19,9 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -33,7 +32,6 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -88,36 +86,18 @@ class SpotResource extends Resource
                 Select::make('tag_ids')
                     ->label('Tags')
                     ->options(static fn () => Technique::pluck('name', 'id'))
-                    ->createOptionForm(function (Schema $schema) {
-                        return TechniqueResource::form($schema);
-                    })
-                    ->createOptionAction(function (Action $action) {
-                        return $action->modalWidth(Width::Medium);
-                    })
                     ->multiple()
                     ->preload(),
                 Select::make('category_ids')
                     ->label('Categories')
                     ->options(static fn () => Category::pluck('name', 'id'))
                     ->multiple()
-                    ->preload()
-                    ->createOptionForm(function (Schema $schema) {
-                        return CategoryResource::form($schema);
-                    })
-                    ->createOptionAction(function (Action $action) {
-                        return $action->modalWidth(Width::Medium);
-                    }),
+                    ->preload(),
                 Select::make('environmental_factor_ids')
                     ->label('Environmental factors')
                     ->options(static fn () => EnvironmentalFactor::pluck('name', 'id'))
                     ->multiple()
-                    ->preload()
-                    ->createOptionForm(function (Schema $schema) {
-                        return EnvironmentalFactorResource::form($schema);
-                    })
-                    ->createOptionAction(function (Action $action) {
-                        return $action->modalWidth(Width::Medium);
-                    }),
+                    ->preload(),
                 FileUpload::make('images')
                     ->columnSpanFull()
                     ->multiple()
@@ -138,6 +118,9 @@ class SpotResource extends Resource
                     ->simple(
                         Textarea::make('url'),
                     ),
+                Hidden::make('user_id')
+                    ->formatStateUsing(static fn () => Filament::auth()->id())
+                    ->dehydrated(static fn (string $context): bool => $context === 'create'),
             ]);
     }
 
@@ -181,6 +164,8 @@ class SpotResource extends Resource
                 TextEntry::make('deleted_at')
                     ->dateTime()
                     ->visible(fn (Spot $record): bool => $record->trashed()),
+                TextEntry::make('user.name')
+                    ->label('Created by'),
             ]);
     }
 
@@ -227,6 +212,9 @@ class SpotResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('user.name')
+                    ->label('Created by')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('distance')
@@ -264,7 +252,8 @@ class SpotResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable(),
-                TrashedFilter::make(),
+                TrashedFilter::make()
+                    ->visible(static fn () => in_array(Filament::auth()->user()->role, [Role::ContentManager, Role::Admin])),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([
                 ViewAction::make()
@@ -297,6 +286,7 @@ class SpotResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->with(['tags:id,name', 'categories:id,name', 'environmentalFactors:id,name', 'user:id,name'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
