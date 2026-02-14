@@ -250,17 +250,20 @@ class SpotResource extends Resource
                     ->label('Tags')
                     ->relationship('tags', 'name')
                     ->multiple()
-                    ->preload(),
+                    ->preload()
+                    ->searchable(),
                 SelectFilter::make('category_ids')
                     ->label('Categories')
                     ->relationship('categories', 'name')
                     ->multiple()
-                    ->preload(),
+                    ->preload()
+                    ->searchable(),
                 SelectFilter::make('environmental_factor_ids')
                     ->label('Environmental factors')
                     ->relationship('environmentalFactors', 'name')
                     ->multiple()
-                    ->preload(),
+                    ->preload()
+                    ->searchable(),
                 TrashedFilter::make(),
             ], layout: FiltersLayout::AboveContent)
             ->recordActions([
