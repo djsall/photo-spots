@@ -133,7 +133,7 @@ class SpotResource extends Resource
                     ->columnSpanFull(),
                 Repeater::make('urls')
                     ->columnSpanFull()
-                    ->minItems(1)
+                    ->minItems(0)
                     ->addActionLabel(__('admin.spots.add-url'))
                     ->simple(
                         Textarea::make('url'),
