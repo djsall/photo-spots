@@ -42,6 +42,7 @@ use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 use UnitEnum;
 
 class SpotResource extends Resource
@@ -143,6 +144,13 @@ class SpotResource extends Resource
                     ->badge(),
                 ImageEntry::make('images')
                     ->disk('public')
+                    ->url(static function (?string $state): ?string {
+                        if ($state === null) {
+                            return null;
+                        }
+
+                        return Storage::disk('public')->url($state);
+                    }, true)
                     ->columnSpanFull(),
                 RepeatableEntry::make('urls')
                     ->schema([
@@ -190,7 +198,14 @@ class SpotResource extends Resource
                     ->badge(),
                 ImageColumn::make('images')
                     ->disk('public')
-                    ->imageSize(100),
+                    ->imageSize(100)
+                    ->url(static function (?string $state): ?string {
+                        if ($state === null) {
+                            return null;
+                        }
+
+                        return Storage::disk('public')->url($state);
+                    }, true),
                 TextColumn::make('description')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
