@@ -13,7 +13,7 @@ class Spot extends Model
     use HasJsonRelationships, SoftDeletes;
 
     protected $fillable = [
-        'name', 'tag_ids', 'category_ids', 'environmental_factor_ids', 'user_id', 'distance', 'images', 'urls', 'access',
+        'name', 'technique_ids', 'category_ids', 'environmental_factor_ids', 'user_id', 'distance', 'images', 'urls', 'access',
         'difficulty', 'description', 'order',
     ];
 
@@ -21,7 +21,7 @@ class Spot extends Model
     {
         return [
             'distance' => 'integer',
-            'tag_ids' => 'array',
+            'technique_ids' => 'array',
             'category_ids' => 'array',
             'environmental_factor_ids' => 'array',
             'images' => 'json',
@@ -31,7 +31,7 @@ class Spot extends Model
 
     public function techniques(): BelongsToJson
     {
-        return $this->belongsToJson(Technique::class, 'tag_ids');
+        return $this->belongsToJson(Technique::class, 'technique_ids');
     }
 
     public function categories(): BelongsToJson
