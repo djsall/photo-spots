@@ -27,4 +27,12 @@ return [
     'spots' => [
         'add-url' => 'Új hivatkozás',
     ],
+    'actions' => [
+        'spots' => [
+            'temporary-url' => [
+                'heading' => 'Időkorlátos link',
+                'click-to-copy' => 'Kattints a linkre a másoláshoz',
+            ],
+        ],
+    ],
 ];

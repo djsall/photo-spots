@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Spots;
 
 use App\Enums\User\Role;
+use App\Filament\Resources\Spots\Actions\CreateTemporaryUrlAction;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
 use App\Models\Category;
 use App\Models\EnvironmentalFactor;
@@ -276,6 +277,7 @@ class SpotResource extends Resource
                 EditAction::make()
                     ->iconButton(),
                 ActionGroup::make([
+                    CreateTemporaryUrlAction::make(),
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make(),

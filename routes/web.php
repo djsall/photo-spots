@@ -4,8 +4,11 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Spots\View;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
+
+Route::get('/spots/{spot}', View::class)->name('spots.view')->middleware('signed');
 
 /*
 Route::get('/', function () {
