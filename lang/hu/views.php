@@ -10,5 +10,5 @@ return [
             'environmental-factors' => 'Körülmények',
             'techniques' => 'Technikák',
         ],
-    ]
+    ],
 ];

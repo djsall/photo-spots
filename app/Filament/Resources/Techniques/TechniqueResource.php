@@ -40,12 +40,12 @@ class TechniqueResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('admin.labels.spot-tag');
+        return __('admin.labels.technique');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.labels.spot-tags');
+        return __('admin.labels.techniques');
     }
 
     public static function getNavigationGroup(): string|UnitEnum|null

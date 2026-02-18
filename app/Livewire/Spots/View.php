@@ -23,7 +23,7 @@ class View extends Component
             return [];
         }
 
-        return array_map(fn(string $image) => Storage::url($image), $this->spot->images);
+        return array_map(fn (string $image) => Storage::url($image), $this->spot->images);
     }
 
     public function render(): \Illuminate\View\View

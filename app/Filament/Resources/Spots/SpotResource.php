@@ -86,7 +86,7 @@ class SpotResource extends Resource
                     ->numeric()
                     ->suffix(' km'),
                 Select::make('tag_ids')
-                    ->label('Tags')
+                    ->label('Techniques')
                     ->options(static fn () => Technique::pluck('name', 'id'))
                     ->multiple()
                     ->preload(),
@@ -135,7 +135,7 @@ class SpotResource extends Resource
                     ->numeric()
                     ->suffix(' km'),
                 TextEntry::make('techniques.name')
-                    ->label('Tags')
+                    ->label('Techniques')
                     ->badge(),
                 TextEntry::make('categories.name')
                     ->label('Categories')
@@ -251,7 +251,7 @@ class SpotResource extends Resource
 
                     }),
                 SelectFilter::make('tag_ids')
-                    ->label('Tags')
+                    ->label('Techniques')
                     ->relationship('techniques', 'name')
                     ->multiple()
                     ->preload()
