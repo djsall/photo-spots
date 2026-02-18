@@ -85,7 +85,7 @@ class SpotResource extends Resource
                 TextInput::make('distance')
                     ->numeric()
                     ->suffix(' km'),
-                Select::make('tag_ids')
+                Select::make('technique_ids')
                     ->label('Techniques')
                     ->options(static fn () => Technique::pluck('name', 'id'))
                     ->multiple()
