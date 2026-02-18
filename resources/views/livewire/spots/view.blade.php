@@ -5,11 +5,11 @@
         </h1>
 
         <div class="flex justify-center">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 my-4 md:my-12 gap-2">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 my-4 md:my-12 gap-2">
                 @foreach($this->images() as $image)
                     <a href="{{ $image }}" target="_blank">
                         <img
-                            class="w-56"
+                            class="w-56 lg:w-128"
                             src="{{ $image }}"
                             alt="{{ $this->spot->name }} {{ $loop->index + 1 }}"
                         >
