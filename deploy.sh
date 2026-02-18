@@ -45,7 +45,7 @@ echo "⬇️ Laravel down"
 
     echo "📦 Installing Npm dependencies"
 
-    npm ci
+    npm ci --silent
 
     echo "🏗️ Compiling assets"
 
