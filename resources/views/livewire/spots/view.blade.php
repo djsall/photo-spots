@@ -37,5 +37,38 @@
                 {{ $this->spot->difficulty }}
             </p>
         </div>
+
+        <div class="mt-12 opacity-80 italic">
+            <div class="flex gap-1 mb-1">
+                <p>
+                    @lang('views.spots.view.categories'):
+                </p>
+                @foreach($this->spot->categories as $category)
+                    <p>
+                        {{ $category->name }}@if(! $loop->last),@endif
+                    </p>
+                @endforeach
+            </div>
+            <div class="flex gap-1 mb-1">
+                <p>
+                    @lang('views.spots.view.techniques'):
+                </p>
+                @foreach($this->spot->techniques as $technique)
+                    <p>
+                        {{ $technique->name }}@if(! $loop->last),@endif
+                    </p>
+                @endforeach
+            </div>
+            <div class="flex gap-1">
+                <p>
+                    @lang('views.spots.view.environmental-factors'):
+                </p>
+                @foreach($this->spot->environmentalFactors as $environemntalFactor)
+                    <p>
+                        {{ $environemntalFactor->name }}@if(! $loop->last),@endif
+                    </p>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>

@@ -134,7 +134,7 @@ class SpotResource extends Resource
                 TextEntry::make('distance')
                     ->numeric()
                     ->suffix(' km'),
-                TextEntry::make('tags.name')
+                TextEntry::make('techniques.name')
                     ->label('Tags')
                     ->badge(),
                 TextEntry::make('categories.name')
@@ -191,7 +191,7 @@ class SpotResource extends Resource
                     ->numeric()
                     ->sortable()
                     ->suffix(' km'),
-                TextColumn::make('tags.name')
+                TextColumn::make('techniques.name')
                     ->badge(),
                 TextColumn::make('categories.name')
                     ->badge(),
@@ -252,7 +252,7 @@ class SpotResource extends Resource
                     }),
                 SelectFilter::make('tag_ids')
                     ->label('Tags')
-                    ->relationship('tags', 'name')
+                    ->relationship('techniques', 'name')
                     ->multiple()
                     ->preload()
                     ->searchable(),
@@ -303,7 +303,7 @@ class SpotResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
-            ->with(['tags:id,name', 'categories:id,name', 'environmentalFactors:id,name', 'user:id,name'])
+            ->with(['techniques:id,name', 'categories:id,name', 'environmentalFactors:id,name', 'user:id,name'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

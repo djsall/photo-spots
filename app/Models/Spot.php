@@ -29,7 +29,7 @@ class Spot extends Model
         ];
     }
 
-    public function tags(): BelongsToJson
+    public function techniques(): BelongsToJson
     {
         return $this->belongsToJson(Technique::class, 'tag_ids');
     }

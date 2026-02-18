@@ -6,6 +6,9 @@ return [
             'description' => 'Leírás',
             'access' => 'Megközelítés',
             'difficulty' => 'Nehézség',
+            'categories' => 'Címkék',
+            'environmental-factors' => 'Körülmények',
+            'techniques' => 'Technikák',
         ],
     ]
 ];
