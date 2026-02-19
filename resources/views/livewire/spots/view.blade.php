@@ -30,7 +30,8 @@
             </p>
             <p class="text-xl mb-4">
                 {{ $this->spot->access }}
-            </p> <p class="text-xl underline">
+            </p>
+            <p class="text-xl underline">
                 @lang('views.spots.view.difficulty'):
             </p>
             <p class="text-xl">
@@ -39,36 +40,58 @@
         </div>
 
         <div class="mt-12 opacity-80 italic">
-            <div class="flex gap-1 mb-1">
-                <p>
-                    @lang('views.spots.view.categories'):
-                </p>
-                @foreach($this->spot->categories as $category)
+            @if(filled($categories = $this->spot->categories))
+                <div class="flex gap-1 mb-1">
                     <p>
-                        {{ $category->name }}@if(! $loop->last),@endif
+                        @lang('views.spots.view.categories'):
                     </p>
-                @endforeach
-            </div>
-            <div class="flex gap-1 mb-1">
-                <p>
-                    @lang('views.spots.view.techniques'):
-                </p>
-                @foreach($this->spot->techniques as $technique)
+                    @foreach($categories as $category)
+                        <p>
+                            {{ $category->name }}@if(! $loop->last)
+                                ,
+                            @endif
+                        </p>
+                    @endforeach
+                </div>
+            @endif
+            @if(filled($techniques = $this->spot->techniques))
+                <div class="flex gap-1 mb-1">
                     <p>
-                        {{ $technique->name }}@if(! $loop->last),@endif
+                        @lang('views.spots.view.techniques'):
                     </p>
-                @endforeach
-            </div>
-            <div class="flex gap-1">
-                <p>
-                    @lang('views.spots.view.environmental-factors'):
-                </p>
-                @foreach($this->spot->environmentalFactors as $environemntalFactor)
+                    @foreach($techniques as $technique)
+                        <p>
+                            {{ $technique->name }}@if(! $loop->last)
+                                ,
+                            @endif
+                        </p>
+                    @endforeach
+                </div>
+            @endif
+            @if(filled($environmentalFactors = $this->spot->environmentalFactors))
+                <div class="flex gap-1">
                     <p>
-                        {{ $environemntalFactor->name }}@if(! $loop->last),@endif
+                        @lang('views.spots.view.environmental-factors'):
                     </p>
-                @endforeach
-            </div>
+                    @foreach($environmentalFactors as $environemntalFactor)
+                        <p>
+                            {{ $environemntalFactor->name }}@if(! $loop->last)
+                                ,
+                            @endif
+                        </p>
+                    @endforeach
+                </div>
+            @endif
+            @if($created_by = $this->spot->user?->name)
+                <div class="flex gap-1">
+                    <p>
+                        @lang('views.spots.view.created-by'):
+                    </p>
+                    <p>
+                        {{ $created_by }}
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
 </div>

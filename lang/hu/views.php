@@ -9,6 +9,7 @@ return [
             'categories' => 'Címkék',
             'environmental-factors' => 'Körülmények',
             'techniques' => 'Technikák',
+            'created-by' => 'Létrehozta',
         ],
     ],
 ];
