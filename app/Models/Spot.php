@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,9 @@ use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
 
 /**
  * @property-read ?array $images
+ * @property-read Collection<Technique> $techniques
+ * @property-read Collection<Category> $categories
+ * @property-read Collection<EnvironmentalFactor> $environmentalFactors
  */
 class Spot extends Model
 {

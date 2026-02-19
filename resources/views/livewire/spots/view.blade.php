@@ -1,97 +1,86 @@
-<div class="flex justify-center">
-    <div class="m-4 md:m-24 text-center w-full max-w-[1200px]">
-        <h1 class="text-4xl md:text-5xl font-semibold mt-8 md:mt-0">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900">
             {{ $this->spot->name }}
         </h1>
 
-        <div class="flex justify-center">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 my-4 md:my-12 gap-2">
-                @foreach($this->images() as $image)
-                    <a href="{{ $image }}" target="_blank">
+        <div class="mt-8 md:mt-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                @foreach($this->images as $image)
+                    <a href="{{ $image }}" target="_blank" class="group overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500">
                         <img
-                            class="w-56 lg:w-128"
                             src="{{ $image }}"
-                            alt="{{ $this->spot->name }} {{ $loop->index + 1 }}"
+                            alt="{{ $this->spot->name }} gallery image {{ $loop->iteration }}"
+                            class="aspect-square w-full object-cover group-hover:opacity-75 transition duration-200"
+                            loading="lazy"
                         >
                     </a>
                 @endforeach
             </div>
         </div>
 
-        <div class="text-left">
-            <p class="text-xl underline">
-                @lang('views.spots.view.description'):
-            </p>
-            <p class="text-xl mb-4">
-                {{ $this->spot->description }}
-            </p>
-            <p class="text-xl underline">
-                @lang('views.spots.view.access'):
-            </p>
-            <p class="text-xl mb-4">
-                {{ $this->spot->access }}
-            </p>
-            <p class="text-xl underline">
-                @lang('views.spots.view.difficulty'):
-            </p>
-            <p class="text-xl">
-                {{ $this->spot->difficulty }}
-            </p>
+        <div class="mt-12 text-left max-w-3xl mx-auto">
+            <dl class="space-y-6">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                        @lang('views.spots.view.description')
+                    </dt>
+                    <dd class="mt-1 text-lg text-gray-900">
+                        {{ $this->spot->description }}
+                    </dd>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                            @lang('views.spots.view.access')
+                        </dt>
+                        <dd class="mt-1 text-lg text-gray-900">
+                            {{ $this->spot->access }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                            @lang('views.spots.view.difficulty')
+                        </dt>
+                        <dd class="mt-1 text-lg text-gray-900">
+                            {{ $this->spot->difficulty }}
+                        </dd>
+                    </div>
+                </div>
+            </dl>
         </div>
 
-        <div class="mt-12 opacity-80 italic">
-            @if(filled($categories = $this->spot->categories))
-                <div class="flex gap-1 mb-1">
+        <footer class="mt-16 pt-8 border-t border-gray-200 text-sm text-gray-500 italic">
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                @if($this->spot->categories->isNotEmpty())
                     <p>
-                        @lang('views.spots.view.categories'):
+                        <strong>@lang('views.spots.view.categories'):</strong>
+                        {{ $this->spot->categories->pluck('name')->implode(', ') }}
                     </p>
-                    @foreach($categories as $category)
-                        <p>
-                            {{ $category->name }}@if(! $loop->last)
-                                ,
-                            @endif
-                        </p>
-                    @endforeach
-                </div>
-            @endif
-            @if(filled($techniques = $this->spot->techniques))
-                <div class="flex gap-1 mb-1">
+                @endif
+
+                @if($this->spot->techniques->isNotEmpty())
                     <p>
-                        @lang('views.spots.view.techniques'):
+                        <strong>@lang('views.spots.view.techniques'):</strong>
+                        {{ $this->spot->techniques->pluck('name')->implode(', ') }}
                     </p>
-                    @foreach($techniques as $technique)
-                        <p>
-                            {{ $technique->name }}@if(! $loop->last)
-                                ,
-                            @endif
-                        </p>
-                    @endforeach
-                </div>
-            @endif
-            @if(filled($environmentalFactors = $this->spot->environmentalFactors))
-                <div class="flex gap-1">
+                @endif
+
+                @if($this->spot->environmentalFactors->isNotEmpty())
                     <p>
-                        @lang('views.spots.view.environmental-factors'):
+                        <strong>@lang('views.spots.view.environmental-factors'):</strong>
+                        {{ $this->spot->environmentalFactors->pluck('name')->implode(', ') }}
                     </p>
-                    @foreach($environmentalFactors as $environemntalFactor)
-                        <p>
-                            {{ $environemntalFactor->name }}@if(! $loop->last)
-                                ,
-                            @endif
-                        </p>
-                    @endforeach
-                </div>
-            @endif
-            @if($created_by = $this->spot->user?->name)
-                <div class="flex gap-1">
+                @endif
+
+                @if($created_by = $this->spot->user?->name)
                     <p>
-                        @lang('views.spots.view.created-by'):
-                    </p>
-                    <p>
+                        <strong>@lang('views.spots.view.created-by'):</strong>
                         {{ $created_by }}
                     </p>
-                </div>
-            @endif
-        </div>
+                @endif
+            </div>
+        </footer>
     </div>
 </div>
