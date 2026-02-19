@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Spots;
 
 use App\Enums\User\Role;
-use App\Filament\Resources\Spots\Actions\CreateTemporaryUrlAction;
+use App\Filament\Resources\Spots\Actions\ShareAction;
 use App\Filament\Resources\Spots\Pages\ManageSpots;
 use App\Models\Category;
 use App\Models\EnvironmentalFactor;
@@ -277,12 +277,12 @@ class SpotResource extends Resource
                 EditAction::make()
                     ->iconButton(),
                 ActionGroup::make([
-                    CreateTemporaryUrlAction::make(),
+                    ShareAction::make(),
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make(),
                 ])
-                    ->color(Color::Red),
+                    ->color(Color::Gray),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

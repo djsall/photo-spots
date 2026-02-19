@@ -30,7 +30,7 @@ return [
     'actions' => [
         'spots' => [
             'temporary-url' => [
-                'heading' => 'Időkorlátos link',
+                'heading' => 'Megosztás',
                 'click-to-copy' => 'Kattints a linkre a másoláshoz',
                 'valid-until' => '24 óráig érvényes',
             ],

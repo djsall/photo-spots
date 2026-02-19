@@ -10,7 +10,7 @@ use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\URL;
 
-class CreateTemporaryUrlAction extends Action
+class ShareAction extends Action
 {
     protected function setUp(): void
     {
