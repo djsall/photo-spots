@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
 
+/**
+ * @property-read ?array $images
+ */
 class Spot extends Model
 {
     use HasJsonRelationships, SoftDeletes;

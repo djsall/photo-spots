@@ -32,6 +32,7 @@ return [
             'temporary-url' => [
                 'heading' => 'Időkorlátos link',
                 'click-to-copy' => 'Kattints a linkre a másoláshoz',
+                'valid-until' => '24 óráig érvényes',
             ],
         ],
     ],
