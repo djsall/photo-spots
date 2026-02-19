@@ -7,7 +7,8 @@
         <div class="mt-8 md:mt-12">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 @foreach($this->images as $image)
-                    <a href="{{ $image }}" target="_blank" class="group overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500">
+                    <a href="{{ $image }}" target="_blank"
+                       class="group overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500">
                         <img
                             src="{{ $image }}"
                             alt="{{ $this->spot->name }} gallery image {{ $loop->iteration }}"
@@ -19,18 +20,18 @@
             </div>
         </div>
 
-        <div class="mt-12 text-left max-w-3xl mx-auto">
+        <div class="mt-12 text-left max-w-4xl mx-auto">
             <dl class="space-y-6">
-                <div>
-                    <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
-                        @lang('views.spots.view.description')
-                    </dt>
-                    <dd class="mt-1 text-lg text-gray-900">
-                        {{ $this->spot->description }}
-                    </dd>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                            @lang('views.spots.view.description')
+                        </dt>
+                        <dd class="mt-1 text-lg text-gray-900">
+                            {{ $this->spot->description }}
+                        </dd>
+                    </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">
                             @lang('views.spots.view.access')
