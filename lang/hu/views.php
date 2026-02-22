@@ -10,6 +10,7 @@ return [
             'environmental-factors' => 'Körülmények',
             'techniques' => 'Technikák',
             'created-by' => 'Létrehozta',
+            'links' => 'Hivatkozások',
         ],
     ],
 ];
