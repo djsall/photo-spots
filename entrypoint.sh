@@ -17,6 +17,9 @@ if [ "$1" = "php-fpm" ]; then
     php artisan migrate --force
     php artisan config:cache
     php artisan route:cache
+
+    npm install
+    npm run build
 fi
 
 chown -R www-data:www-data /var/www/html
