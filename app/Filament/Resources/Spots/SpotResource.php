@@ -28,7 +28,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -153,13 +152,11 @@ class SpotResource extends Resource
                         return Storage::disk('public')->url($state);
                     }, true)
                     ->columnSpanFull(),
-                RepeatableEntry::make('urls')
-                    ->schema([
-                        TextEntry::make('url')
-                            ->url(static fn (?string $state): ?string => $state, true)
-                            ->color(Color::Blue)
-                            ->limit(48),
-                    ]),
+                TextEntry::make('urls')
+                    ->badge()
+                    ->url(static fn (?string $state): ?string => $state, true)
+                    ->color(Color::Blue)
+                    ->limit(48),
                 TextEntry::make('description')
                     ->columnSpanFull(),
                 TextEntry::make('access')
