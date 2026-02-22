@@ -1,3 +1,11 @@
+# --- Stage 1: Build Assets ---
+FROM node:20-alpine AS asset-builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
 FROM php:8.4-fpm-alpine
 
 # Install system dependencies & PHP extensions
@@ -7,6 +15,8 @@ RUN apk add --no-cache libpng-dev libjpeg-turbo-dev freetype-dev zip libzip-dev 
 
 # Copy composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy the compiled assets from the first stage
+COPY --from=asset-builder /app/public/build /var/www/html/public/build
 
 WORKDIR /var/www/html
 
