@@ -61,8 +61,11 @@
                 </div>
                 <ul class="list-disc ms-5 ">
                     @foreach($this->spot->urls as $link)
-                        <li class="text-blue-500 hover:text-blue-600 transition-colors">
-                            <a href="{{ $link }}">{{ \Illuminate\Support\Str::limit($link,  50) }}</a>
+                        <li>
+                            <a
+                                href="{{ $link }}"
+                                class="text-blue-500 hover:text-blue-600 transition-colors"
+                            >{{ \Illuminate\Support\Str::limit($link,  50) }}</a>
                         </li>
                     @endforeach
                 </ul>
