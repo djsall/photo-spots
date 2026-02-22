@@ -52,22 +52,22 @@
             </dl>
         </div>
 
-        <div class="mt-12 text-left max-w-4xl mx-auto">
-            <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">
-                <p class="mb-1">
-                    @lang('views.spots.view.links')
-                </p>
+        @if(filled($this->spot->urls))
+            <div class="mt-12 text-left max-w-4xl mx-auto">
+                <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    <p class="mb-1">
+                        @lang('views.spots.view.links')
+                    </p>
+                </div>
+                <ul class="list-disc ms-5 ">
+                    @foreach($this->spot->urls as $link)
+                        <li class="text-blue-500 hover:text-blue-600 transition-colors">
+                            <a href="{{ $link }}">{{ \Illuminate\Support\Str::limit($link,  50) }}</a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
-            <ul class="list-disc ms-5 ">
-                @foreach($this->spot->urls as $link)
-                    <li class="text-blue-500 hover:text-blue-600 transition-colors">
-                        <a href="{{ $link }}">{{ $link }}</a>
-                    </li>
-                @endforeach
-            </ul>
-
-
-        </div>
+        @endif
 
         <footer class="mt-16 pt-8 border-t border-gray-200 text-sm text-gray-500 italic">
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
