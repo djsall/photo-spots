@@ -2,9 +2,15 @@
 
 return [
     'roles' => [
-        'viewer' => 'Olvasó',
+        'viewer' => 'Látogató',
         'user' => 'Felhasználó',
         'content-manager' => 'Tartalomkezelő',
+        'admin' => 'Adminisztrátor',
+    ],
+    'role-descriptions' => [
+        'viewer' => 'Saját helyeket lát és tud létrehozni és szerkeszteni.',
+        'user' => 'Minden helyet lát, sajátot tud létrehozni és szerkerszteni.',
+        'content-manager' => 'Minden helyet lát és tud szerkeszteni',
         'admin' => 'Adminisztrátor',
     ],
     'labels' => [

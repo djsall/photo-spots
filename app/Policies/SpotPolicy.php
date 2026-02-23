@@ -15,12 +15,16 @@ class SpotPolicy
 
     public function view(User $user, Spot $spot): bool
     {
+        if ($user->role === Role::Viewer) {
+            return $spot->user_id === $user->id;
+        }
+
         return true;
     }
 
     public function create(User $user): bool
     {
-        return in_array($user->role, [Role::User, Role::ContentManager, Role::Admin]);
+        return true;
     }
 
     public function update(User $user, Spot $spot): bool

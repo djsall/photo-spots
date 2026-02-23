@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\SpotScope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +17,7 @@ use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
  * @property-read Collection<Category> $categories
  * @property-read Collection<EnvironmentalFactor> $environmentalFactors
  */
+#[ScopedBy(SpotScope::class)]
 class Spot extends Model
 {
     use HasJsonRelationships, SoftDeletes;

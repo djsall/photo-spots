@@ -265,6 +265,12 @@ class SpotResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable(),
+                SelectFilter::make('user_id')
+                    ->label('Created by')
+                    ->relationship('user', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
                 TrashedFilter::make()
                     ->visible(static fn () => in_array(Filament::auth()->user()->role, [Role::ContentManager, Role::Admin])),
             ], layout: FiltersLayout::AboveContent)

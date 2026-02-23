@@ -16,8 +16,8 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -64,9 +64,10 @@ class UserResource extends Resource
         return $schema
             ->columns(1)
             ->components([
-                Select::make('role')
+                ToggleButtons::make('role')
                     ->options(Role::class)
                     ->default(Role::Viewer)
+                    ->tooltips(static fn () => __('admin.role-descriptions'))
                     ->required(),
                 TextInput::make('name')
                     ->required(),
