@@ -27,14 +27,14 @@ services:
             - .:/var/www/html
             - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
         networks:
-            - proxy
             - internal
+            - traefik
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.photo-spots.rule=Host(`photo-spots.leventeproksa.site`)"
             - "traefik.http.routers.photo-spots.entrypoints=websecure"
             - "traefik.http.routers.photo-spots.tls.certresolver=myresolver"
-            - "traefik.docker.network=proxy"
+            - "traefik.docker.network=traefik"
             - "traefik.http.services.photo-spots.loadbalancer.server.port=80"
         logging:
             driver: "json-file"
@@ -105,10 +105,10 @@ services:
                 max-file: "3"
 
 networks:
-    proxy:
-        external: true
     internal:
         driver: bridge
+    traefik:
+        external: true
 
 volumes:
     db-data:
