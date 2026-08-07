@@ -10,11 +10,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Don't COPY assets here, the Volume will just delete them.
-# Just set the permissions and prepare the entrypoint.
-COPY . .
-RUN chown -R www-data:www-data /var/www/html
-
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
