@@ -57,7 +57,7 @@ class SpotResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Spot::count();
+        return (string) Spot::count();
     }
 
     public static function getModelLabel(): string
@@ -244,8 +244,8 @@ class SpotResource extends Resource
                                 filled($distance),
                                 function (Builder $query) use ($distance) {
                                     return $query->where('distance', '<=', $distance);
-                                });
-
+                                }
+                            );
                     }),
                 SelectFilter::make('tag_ids')
                     ->label('Techniques')
