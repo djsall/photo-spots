@@ -1,5 +1,11 @@
 FROM php:8.4-fpm-alpine
 
+ENV UPLOAD_MAX_FILESIZE=12M \
+    POST_MAX_SIZE=15M
+
+RUN echo "upload_max_filesize = ${UPLOAD_MAX_FILESIZE}" > /usr/local/etc/php/conf.d/uploads.ini \
+    && echo "post_max_size = ${POST_MAX_SIZE}" >> /usr/local/etc/php/conf.d/uploads.ini
+
 # Install system dependencies
 RUN apk add --no-cache libpng-dev libjpeg-turbo-dev freetype-dev zip libzip-dev unzip git icu-dev nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
