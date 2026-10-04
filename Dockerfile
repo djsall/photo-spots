@@ -9,7 +9,7 @@ RUN echo "upload_max_filesize = ${UPLOAD_MAX_FILESIZE}" > /usr/local/etc/php/con
 # Install system dependencies
 RUN apk add --no-cache libpng-dev libjpeg-turbo-dev freetype-dev zip libzip-dev unzip git icu-dev nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql gd zip intl bcmath opcache
+    && docker-php-ext-install pdo_mysql gd zip intl bcmath opcache exif
 
 # Copy composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

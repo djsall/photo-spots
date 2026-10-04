@@ -43,6 +43,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Spatie\Image\Image;
 use UnitEnum;
 
 class SpotResource extends Resource
@@ -105,7 +107,25 @@ class SpotResource extends Resource
                     ->openable()
                     ->downloadable()
                     ->disk('public')
-                    ->image(),
+                    ->image()
+                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                        $targetSizeBytes = 500 * 1024; // 500 KB limit
+                        $currentSizeBytes = $file->getSize();
+                        $filename = $file->hashName();
+
+                        if ($currentSizeBytes > $targetSizeBytes) {
+                            $filePath = $file->getRealPath();
+                            $image = Image::load($filePath);
+
+                            // Scale width using square-root ratio + safety factor
+                            $scaleFactor = sqrt($targetSizeBytes / $currentSizeBytes) * 0.9;
+                            $newWidth = (int) round($image->getWidth() * $scaleFactor);
+
+                            $image->width($newWidth)->quality(90)->save();
+                        }
+
+                        return $file->storePubliclyAs('', $filename);
+                    }),
                 Textarea::make('description')
                     ->columnSpanFull(),
                 Textarea::make('access')
