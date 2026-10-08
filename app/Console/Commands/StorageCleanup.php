@@ -26,46 +26,76 @@ class StorageCleanup extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
-        $isDryRun = $this->option('dry-run');
+        $dryRun = $this->option('dry-run');
 
-        if ($isDryRun) {
+        if ($dryRun) {
             $this->info('Running in DRY-RUN mode. No files will be deleted.');
         }
 
         Artisan::call('down');
 
         try {
-            $dbFiles = Spot::query()->whereNotNull('images')->pluck('images')
-                ->filter()
-                ->flatten()
-                ->toArray();
+            $usedFiles = $this->getUsedFileNames();
 
-            $allDiskFiles = Storage::disk('public')->allFiles();
+            $diskFiles = Storage::disk('public')->files();
+            $diskFiles = $this->ignoreDotFiles($diskFiles);
 
-            $allDiskFiles = array_filter($allDiskFiles, function ($file) {
-                return ! str_starts_with(basename($file), '.');
-            });
+            $unusedFiles = array_diff($diskFiles, $usedFiles);
 
-            $filesToDelete = array_diff($allDiskFiles, $dbFiles);
-
-            if (blank($filesToDelete)) {
+            if (blank($unusedFiles)) {
                 $this->info('No unused files found.');
-            } else {
-                $this->info(count($filesToDelete).' unused file(s) found.');
 
-                if ($isDryRun) {
-                    $this->table(['Files to delete'], array_map(fn ($f) => [$f], $filesToDelete));
-                } else {
-                    Storage::disk('public')->delete($filesToDelete);
-                    $this->info('Unused files deleted successfully.');
-                }
+                return Command::SUCCESS;
             }
+
+            $this->info(count($unusedFiles).' unused file(s) found.');
+
+            if ($dryRun) {
+                $this->displayTable($unusedFiles);
+            } else {
+                $this->deleteFiles($unusedFiles);
+            }
+
+            return Command::SUCCESS;
+
         } finally {
             Artisan::call('up');
         }
+    }
 
-        return Command::SUCCESS;
+    private function getUsedFileNames(): array
+    {
+        return Spot::query()
+            ->whereNotNull('images')
+            ->pluck('images')
+            ->filter()
+            ->flatten()
+            ->toArray();
+    }
+
+    private function ignoreDotFiles(array $files): array
+    {
+        return array_filter(
+            $files,
+            static fn (string $file): bool => ! str_starts_with(basename($file), '.')
+        );
+    }
+
+    private function deleteFiles(array $files): void
+    {
+        Storage::disk('public')->delete($files);
+        $this->info('Unused files deleted successfully.');
+    }
+
+    private function displayTable(array $files): void
+    {
+        $lines = array_map(
+            static fn (string $file): array => [$file],
+            $files
+        );
+
+        $this->table(['Files to delete'], $lines);
     }
 }
