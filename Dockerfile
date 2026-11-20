@@ -1,13 +1,13 @@
 FROM serversideup/php:8.4-fpm-nginx AS base
 
-ENV PHP_OPCACHE_ENABLE=1 \
-    PHP_UPLOAD_MAX_FILE_SIZE=12M \
-    PHP_POST_MAX_SIZE=15M
-
 # Extensions not included in the base image
 USER root
 RUN install-php-extensions bcmath exif gd intl
 USER www-data
+
+ENV PHP_OPCACHE_ENABLE=1 \
+    PHP_UPLOAD_MAX_FILE_SIZE=12M \
+    PHP_POST_MAX_SIZE=15M
 
 # Install dependencies first so this layer is cached until composer.lock changes
 COPY --chown=www-data:www-data composer.json composer.lock ./
