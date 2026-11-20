@@ -20,7 +20,7 @@ class View extends Component
     public function images(): array
     {
         return collect($this->spot->images ?? [])
-            ->map(fn (string $path) => Storage::url($path))
+            ->map(fn (string $path): string => Storage::url($path))
             ->toArray();
     }
 
