@@ -1,31 +1,28 @@
-FROM php:8.4-fpm
+FROM serversideup/php:8.4-fpm-nginx AS base
 
-ENV UPLOAD_MAX_FILESIZE=12M \
-    POST_MAX_SIZE=15M
+ENV PHP_OPCACHE_ENABLE=1 \
+    PHP_UPLOAD_MAX_FILE_SIZE=12M \
+    PHP_POST_MAX_SIZE=15M
 
-RUN echo "upload_max_filesize = ${UPLOAD_MAX_FILESIZE}" > /usr/local/etc/php/conf.d/uploads.ini \
-    && echo "post_max_size = ${POST_MAX_SIZE}" >> /usr/local/etc/php/conf.d/uploads.ini
+# Extensions not included in the base image
+USER root
+RUN install-php-extensions bcmath exif gd intl
+USER www-data
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype-dev \
-    zip \
-    libzip-dev \
-    unzip \
-    git \
-    libicu-dev \
-    nodejs \
-    npm \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql gd zip intl bcmath opcache exif
-# Copy composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install dependencies first so this layer is cached until composer.lock changes
+COPY --chown=www-data:www-data composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --no-scripts --no-autoloader --prefer-dist
 
-WORKDIR /var/www/html
+# Frontend assets (needs vendor/ for the Flux CSS)
+FROM node:24-slim AS assets
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+COPY --from=base /var/www/html/vendor ./vendor
+RUN npm run build
 
-COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT ["entrypoint.sh"]
+FROM base
+COPY --chown=www-data:www-data . .
+COPY --from=assets --chown=www-data:www-data /app/public/build ./public/build
+RUN composer dump-autoload --optimize --no-dev

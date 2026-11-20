@@ -1,7 +1,28 @@
-# .dockerignore
+.git
+.idea
+.vscode
+.fleet
+.nova
+.zed
+.claude
+.mcp.json
+.DS_Store
+.env
+.env.*
+!.env.example
+auth.json
 node_modules
 vendor
-.git
-storage/framework/cache
-storage/framework/sessions
-storage/framework/views
+tests
+.phpunit.cache
+.phpunit.result.cache
+bootstrap/cache/*.php
+public/build
+public/hot
+public/storage
+# storage/ is mounted at runtime; keep only the directory skeleton
+storage/**
+!storage/**/.gitignore
+docker-compose.yml
+Dockerfile
+deploy.sh
